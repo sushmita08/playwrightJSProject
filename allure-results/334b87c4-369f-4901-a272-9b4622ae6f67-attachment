@@ -1,0 +1,103 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Cost Calculator >> should apply discount
+- Location: /Users/zineone/Assesment/tests/cost-calculator.spec.js:41:3
+
+# Error details
+
+```
+Error: page.selectOption: Test ended.
+Call log:
+  - waiting for locator('select, .test-select')
+
+    at /Users/zineone/Assesment/tests/cost-calculator.spec.js:44:18
+    at /Users/zineone/Assesment/tests/cost-calculator.spec.js:42:10
+```
+
+# Test source
+
+```ts
+   1 | const { test } = require('@playwright/test');
+   2 | const { allure } = require('@playwright/test');
+   3 |
+   4 | test.describe('Cost Calculator', () => {
+   5 |   test.beforeEach(async ({ page }) => {
+   6 |     test.step('Login to application', async () => {
+   7 |       await page.goto('https://gor-pathology.web.app/');
+   8 |       await page.waitForSelector('input[type="email"]', { timeout: 10000 });
+   9 |       await page.fill('input[type="email"]', 'test@kennect.io');
+  10 |       await page.fill('input[type="password"]', 'Qwerty@1234');
+  11 |       await page.click('button[type="submit"]');
+  12 |     });
+  13 |
+  14 |     test.step('Navigate to cost calculator', async () => {
+  15 |       await page.click('text=Cost Calculator, a[href*="calculator"]');
+  16 |       await page.waitForURL('**/calculator', { timeout: 10000 });
+  17 |     });
+  18 |   });
+  19 |
+  20 |   test('should display cost calculator form', async ({ page }) => {
+  21 |     test.step('Verify calculator elements', async () => {
+  22 |       // Wait for calculator form elements
+  23 |       await page.waitForSelector('form, .calculator-form', { timeout: 10000 });
+  24 |       await page.waitForSelector('select, .test-select', { timeout: 10000 });
+  25 |       await page.waitForSelector('input[type="number"], .discount-input', { timeout: 10000 });
+  26 |       await page.screenshot({ path: 'test-results/calculator-form.png' });
+  27 |     });
+  28 |   });
+  29 |
+  30 |   test('should calculate test costs', async ({ page }) => {
+  31 |     test.step('Select test and get cost', async () => {
+  32 |       // Select Complete Blood Count test
+  33 |       await page.selectOption('select, .test-select', { label: 'Complete Blood Count' });
+  34 |       // Wait for cost to update
+  35 |       await page.waitForSelector('.test-cost, .amount', { timeout: 10000 });
+  36 |       const cost = await page.$eval('.test-cost, .amount', el => el.textContent);
+  37 |       await page.screenshot({ path: 'test-results/test-cost.png' });
+  38 |     });
+  39 |   });
+  40 |
+  41 |   test('should apply discount', async ({ page }) => {
+  42 |     test.step('Calculate discounted cost', async () => {
+  43 |       // Select test
+> 44 |       await page.selectOption('select, .test-select', { label: 'Complete Blood Count' });
+     |                  ^ Error: page.selectOption: Test ended.
+  45 |       // Wait for original cost
+  46 |       await page.waitForSelector('.test-cost, .amount', { timeout: 10000 });
+  47 |       const originalCost = await page.$eval('.test-cost, .amount', el => el.textContent);
+  48 |
+  49 |       // Apply discount
+  50 |       await page.fill('input[type="number"], .discount-input', '10');
+  51 |       await page.click('button:has-text("Apply"), .apply-discount');
+  52 |
+  53 |       // Wait for discounted cost
+  54 |       await page.waitForSelector('.discounted-cost, .final-amount', { timeout: 10000 });
+  55 |       const discountedCost = await page.$eval('.discounted-cost, .final-amount', el => el.textContent);
+  56 |       await page.screenshot({ path: 'test-results/discounted-cost.png' });
+  57 |     });
+  58 |   });
+  59 |
+  60 |   test('should add multiple tests', async ({ page }) => {
+  61 |     test.step('Add multiple tests', async () => {
+  62 |       // Add first test
+  63 |       await page.selectOption('select, .test-select', { label: 'Complete Blood Count' });
+  64 |       await page.click('button:has-text("Add"), .add-test');
+  65 |
+  66 |       // Add second test
+  67 |       await page.selectOption('select, .test-select', { label: 'Lipid Profile' });
+  68 |       await page.click('button:has-text("Add"), .add-test');
+  69 |
+  70 |       // Verify test items
+  71 |       await page.waitForSelector('.test-items, .selected-tests', { timeout: 10000 });
+  72 |       const items = await page.$$('.test-item');
+  73 |       await page.screenshot({ path: 'test-results/multiple-tests.png' });
+  74 |     });
+  75 |   });
+  76 | }); 
+```

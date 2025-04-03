@@ -1,0 +1,221 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Patient Management >> should view patient test history
+- Location: /Users/zineone/Assesment/tests/patient-management.spec.js:52:3
+
+# Error details
+
+```
+Error: page.click: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for locator('text=John Doe')
+
+    at /Users/zineone/Assesment/tests/patient-management.spec.js:57:16
+```
+
+# Page snapshot
+
+```yaml
+- banner:
+  - button "account of current user": T
+- navigation "mailbox folders":
+  - separator
+  - list:
+    - link "dashboard Dashboard":
+      - button "dashboard Dashboard":
+        - img "dashboard"
+        - text: Dashboard
+    - link "dashboard Tests":
+      - button "dashboard Tests":
+        - img "dashboard"
+        - text: Tests
+    - link "dashboard Inventory":
+      - button "dashboard Inventory":
+        - img "dashboard"
+        - text: Inventory
+    - link "dashboard Patients":
+      - button "dashboard Patients":
+        - img "dashboard"
+        - text: Patients
+    - link "dashboard Labs":
+      - button "dashboard Labs":
+        - img "dashboard"
+        - text: Labs
+    - link "dashboard Doctors":
+      - button "dashboard Doctors":
+        - img "dashboard"
+        - text: Doctors
+    - link "dashboard Accounting":
+      - button "dashboard Accounting":
+        - img "dashboard"
+        - text: Accounting
+- main:
+  - text: Patients
+  - link "Add Patient add":
+    - button "Add Patient add":
+      - text: Add Patient
+      - img "add"
+  - navigation "breadcrumb":
+    - list:
+      - listitem:
+        - link "dashboard":
+          - paragraph: dashboard
+      - listitem:
+        - paragraph: Patients
+  - heading "List of Patients" [level=6]
+  - textbox "Search"
+  - button [disabled]
+  - button "Export"
+  - table:
+    - rowgroup:
+      - row "Sr Name Gender Age Contact No Date":
+        - columnheader "Sr":
+          - button "Sr"
+        - columnheader "Name":
+          - button "Name"
+        - columnheader "Gender":
+          - button "Gender"
+        - columnheader "Age":
+          - button "Age"
+        - columnheader "Contact No":
+          - button "Contact No"
+        - columnheader "Date":
+          - button "Date"
+    - rowgroup:
+      - row "filter data by Sr filter data by Name filter data by Gender filter data by Age filter data by Contact No filter data by Date":
+        - cell "filter data by Sr":
+          - searchbox "filter data by Sr"
+        - cell "filter data by Name":
+          - searchbox "filter data by Name"
+        - cell "filter data by Gender":
+          - searchbox "filter data by Gender"
+        - cell "filter data by Age":
+          - searchbox "filter data by Age"
+        - cell "filter data by Contact No":
+          - searchbox "filter data by Contact No"
+        - cell "filter data by Date":
+          - searchbox "filter data by Date"
+      - row "275 aditya male 22 7852524875 25 - 3 - 2025 14:21:58":
+        - cell "275"
+        - cell "aditya"
+        - cell "male"
+        - cell "22"
+        - cell "7852524875"
+        - cell "25 - 3 - 2025 14:21:58"
+      - row "272 joe male 45 8546525541 25 - 3 - 2025 11:34:55":
+        - cell "272"
+        - cell "joe"
+        - cell "male"
+        - cell "45"
+        - cell "8546525541"
+        - cell "25 - 3 - 2025 11:34:55"
+      - row "271 Amit Majumder male 26 8617777029 15 - 3 - 2025 13:57:37":
+        - cell "271"
+        - cell "Amit Majumder"
+        - cell "male"
+        - cell "26"
+        - cell "8617777029"
+        - cell "15 - 3 - 2025 13:57:37"
+      - row "270 soma male 25 1234567897 13 - 3 - 2025 10:16:49":
+        - cell "270"
+        - cell "soma"
+        - cell "male"
+        - cell "25"
+        - cell "1234567897"
+        - cell "13 - 3 - 2025 10:16:49"
+      - row "269 pr male 90 9075742434 8 - 3 - 2025 22:35:58":
+        - cell "269"
+        - cell "pr"
+        - cell "male"
+        - cell "90"
+        - cell "9075742434"
+        - cell "8 - 3 - 2025 22:35:58"
+  - table:
+    - rowgroup:
+      - row "5 rows 1-5 of 111":
+        - cell "5 rows 1-5 of 111":
+          - 'button "Rows per page: 5 rows"': 5 rows
+          - button [disabled]
+          - button [disabled]
+          - text: 1-5 of 111
+          - button
+          - button
+  - link
+- log
+```
+
+# Test source
+
+```ts
+   1 | const { test, expect } = require('@playwright/test');
+   2 |
+   3 | test.describe('Patient Management', () => {
+   4 |   test.beforeEach(async ({ page }) => {
+   5 |     // Login before each test
+   6 |     await page.goto('https://gor-pathology.web.app/');
+   7 |     await page.fill('input[type="email"]', 'test@kennect.io');
+   8 |     await page.fill('input[type="password"]', 'Qwerty@1234');
+   9 |     await page.click('button[type="submit"]');
+  10 |   });
+  11 |
+  12 |   test('should add new patient successfully', async ({ page }) => {
+  13 |     // Navigate to add patient page
+  14 |     await page.click('text=Add Patient');
+  15 |     
+  16 |     // Fill patient details
+  17 |     await page.fill('input[name="name"]', 'John Doe');
+  18 |     await page.fill('input[name="age"]', '30');
+  19 |     await page.fill('input[name="phone"]', '1234567890');
+  20 |     await page.fill('input[name="email"]', 'john.doe@example.com');
+  21 |     
+  22 |     // Submit form
+  23 |     await page.click('button:has-text("Add Patient")');
+  24 |     
+  25 |     // Verify patient is added
+  26 |     await expect(page.locator('.patient-list')).toContainText('John Doe');
+  27 |   });
+  28 |
+  29 |   test('should create test request for patient', async ({ page }) => {
+  30 |     // Navigate to create test page
+  31 |     await page.click('text=Create Test');
+  32 |     
+  33 |     // Select patient
+  34 |     await page.selectOption('select[name="patient"]', 'John Doe');
+  35 |     
+  36 |     // Select tests
+  37 |     await page.check('input[name="cbc"]');
+  38 |     await page.check('input[name="lipid"]');
+  39 |     
+  40 |     // Add notes
+  41 |     await page.fill('textarea[name="notes"]', 'Test request for routine checkup');
+  42 |     
+  43 |     // Submit test request
+  44 |     await page.click('button:has-text("Create Test Request")');
+  45 |     
+  46 |     // Verify test appears in todo list
+  47 |     await expect(page.locator('.todo-list')).toContainText('John Doe');
+  48 |     await expect(page.locator('.todo-list')).toContainText('CBC');
+  49 |     await expect(page.locator('.todo-list')).toContainText('Lipid Profile');
+  50 |   });
+  51 |
+  52 |   test('should view patient test history', async ({ page }) => {
+  53 |     // Navigate to patient list
+  54 |     await page.click('text=Patients');
+  55 |     
+  56 |     // Click on a patient
+> 57 |     await page.click('text=John Doe');
+     |                ^ Error: page.click: Test timeout of 30000ms exceeded.
+  58 |     
+  59 |     // Verify test history is displayed
+  60 |     await expect(page.locator('.test-history')).toBeVisible();
+  61 |     await expect(page.locator('.test-history')).toContainText('CBC');
+  62 |     await expect(page.locator('.test-history')).toContainText('Lipid Profile');
+  63 |   });
+  64 | }); 
+```

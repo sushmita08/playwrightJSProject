@@ -1,0 +1,81 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Login Functionality >> should show error with invalid credentials
+- Location: /Users/zineone/Assesment/tests/login.spec.js:21:3
+
+# Error details
+
+```
+Error: Timed out 5000ms waiting for expect(locator).toBeVisible()
+
+Locator: locator('.error-message')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+  - expect.toBeVisible with timeout 5000ms
+  - waiting for locator('.error-message')
+
+    at /Users/zineone/Assesment/tests/login.spec.js:30:50
+```
+
+# Page snapshot
+
+```yaml
+- text: GOR Pathology & Diagnostic Email
+- textbox: invalid@email.com
+- text: Password
+- textbox: wrongpassword
+- button "Login"
+- button "Recover or set password"
+- text: OR
+- button "gooogle Login in with Google":
+  - img "gooogle"
+  - text: Login in with Google
+- alert:
+  - text: There is no user record corresponding to this identifier. The user may have been deleted.
+  - button "close"
+```
+
+# Test source
+
+```ts
+   1 | const { test, expect } = require('@playwright/test');
+   2 |
+   3 | test.describe('Login Functionality', () => {
+   4 |   test.beforeEach(async ({ page }) => {
+   5 |     await page.goto('https://gor-pathology.web.app/');
+   6 |   });
+   7 |
+   8 |   test('should login successfully with valid credentials', async ({ page }) => {
+   9 |     // Fill in login credentials
+  10 |     await page.fill('input[type="email"]', 'test@kennect.io');
+  11 |     await page.fill('input[type="password"]', 'Qwerty@1234');
+  12 |     
+  13 |     // Click login button
+  14 |     await page.click('button[type="submit"]');
+  15 |     
+  16 |     // Verify successful login
+  17 |     await expect(page).toHaveURL(/.*dashboard/);
+  18 |     await expect(page.locator('.dashboard')).toBeVisible();
+  19 |   });
+  20 |
+  21 |   test('should show error with invalid credentials', async ({ page }) => {
+  22 |     // Fill in invalid credentials
+  23 |     await page.fill('input[type="email"]', 'invalid@email.com');
+  24 |     await page.fill('input[type="password"]', 'wrongpassword');
+  25 |     
+  26 |     // Click login button
+  27 |     await page.click('button[type="submit"]');
+  28 |     
+  29 |     // Verify error message
+> 30 |     await expect(page.locator('.error-message')).toBeVisible();
+     |                                                  ^ Error: Timed out 5000ms waiting for expect(locator).toBeVisible()
+  31 |   });
+  32 | }); 
+```

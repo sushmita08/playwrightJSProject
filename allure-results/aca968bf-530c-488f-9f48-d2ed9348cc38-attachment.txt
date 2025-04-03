@@ -1,0 +1,74 @@
+Failed to verify error message: ExpectError: Timed out 10000ms waiting for expect(locator).toBeVisible()
+
+Locator: locator('.error-message, .alert-error').first()
+Expected: visible
+Received: <element(s) not found>
+Call log:
+  - expect.toBeVisible with timeout 10000ms
+  - waiting for locator('.error-message, .alert-error').first()
+
+    at /Users/zineone/Assesment/tests/login.spec.js:75:36 {
+  matcherResult: {
+    message: '\x1B[31mTimed out 10000ms waiting for \x1B[39m\x1B[2mexpect(\x1B[22m\x1B[31mlocator\x1B[39m\x1B[2m).\x1B[22mtoBeVisible\x1B[2m()\x1B[22m\n' +
+      '\n' +
+      "Locator: locator('.error-message, .alert-error').first()\n" +
+      'Expected: visible\n' +
+      'Received: <element(s) not found>\n' +
+      'Call log:\n' +
+      '\x1B[2m  - expect.toBeVisible with timeout 10000ms\x1B[22m\n' +
+      "\x1B[2m  - waiting for locator('.error-message, .alert-error').first()\x1B[22m\n",
+    pass: false,
+    actual: '<element(s) not found>',
+    name: 'toBeVisible',
+    expected: 'visible',
+    log: [
+      '  - expect.toBeVisible with timeout 10000ms',
+      "  - waiting for locator('.error-message, .alert-error').first()"
+    ],
+    timeout: 10000
+  },
+  [Symbol(step)]: {
+    stepId: 'expect@18',
+    category: 'expect',
+    title: 'expect.toBeVisible',
+    params: { expected: [Object] },
+    infectParentStepsWithError: undefined,
+    boxedStack: undefined,
+    location: {
+      file: '/Users/zineone/Assesment/tests/login.spec.js',
+      line: 75,
+      column: 36
+    },
+    steps: [],
+    attachmentIndices: [],
+    info: TestStepInfoImpl {
+      annotations: [],
+      _testInfo: [TestInfoImpl],
+      _stepId: 'expect@18'
+    },
+    complete: [Function: complete],
+    endWallTime: 1743661245048,
+    error: {
+      message: 'Error: \x1B[31mTimed out 10000ms waiting for \x1B[39m\x1B[2mexpect(\x1B[22m\x1B[31mlocator\x1B[39m\x1B[2m).\x1B[22mtoBeVisible\x1B[2m()\x1B[22m\n' +
+        '\n' +
+        "Locator: locator('.error-message, .alert-error').first()\n" +
+        'Expected: visible\n' +
+        'Received: <element(s) not found>\n' +
+        'Call log:\n' +
+        '\x1B[2m  - expect.toBeVisible with timeout 10000ms\x1B[22m\n' +
+        "\x1B[2m  - waiting for locator('.error-message, .alert-error').first()\x1B[22m\n",
+      stack: 'Error: \x1B[31mTimed out 10000ms waiting for \x1B[39m\x1B[2mexpect(\x1B[22m\x1B[31mlocator\x1B[39m\x1B[2m).\x1B[22mtoBeVisible\x1B[2m()\x1B[22m\n' +
+        '\n' +
+        "Locator: locator('.error-message, .alert-error').first()\n" +
+        'Expected: visible\n' +
+        'Received: <element(s) not found>\n' +
+        'Call log:\n' +
+        '\x1B[2m  - expect.toBeVisible with timeout 10000ms\x1B[22m\n' +
+        "\x1B[2m  - waiting for locator('.error-message, .alert-error').first()\x1B[22m\n" +
+        '\n' +
+        '    at /Users/zineone/Assesment/tests/login.spec.js:75:36',
+      cause: undefined,
+      matcherResult: [Object]
+    }
+  }
+}

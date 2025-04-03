@@ -1,0 +1,115 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Home Page >> should navigate to cost calculator
+- Location: /Users/zineone/Assesment/tests/home-page.spec.js:27:3
+
+# Error details
+
+```
+Error: page.fill: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for locator('[data-testid="email-input"]')
+
+    at /Users/zineone/Assesment/tests/home-page.spec.js:8:18
+```
+
+# Page snapshot
+
+```yaml
+- text: GOR Pathology & Diagnostic Email
+- textbox
+- text: Password
+- textbox
+- button "Login"
+- button "Recover or set password"
+- text: OR
+- button "gooogle Login in with Google":
+  - img "gooogle"
+  - text: Login in with Google
+```
+
+# Test source
+
+```ts
+   1 | const { test, expect } = require('@playwright/test');
+   2 | const { allure } = require('allure-playwright');
+   3 |
+   4 | test.describe('Home Page', () => {
+   5 |   test.beforeEach(async ({ page }) => {
+   6 |     await allure.step('Login to application', async () => {
+   7 |       await page.goto('https://gor-pathology.web.app/');
+>  8 |       await page.fill('[data-testid="email-input"]', 'test@kennect.io');
+     |                  ^ Error: page.fill: Test timeout of 30000ms exceeded.
+   9 |       await page.fill('[data-testid="password-input"]', 'Qwerty@1234');
+  10 |       await page.click('[data-testid="login-button"]');
+  11 |       // Wait for dashboard to load
+  12 |       await page.waitForSelector('[data-testid="dashboard-content"]');
+  13 |     });
+  14 |   });
+  15 |
+  16 |   test('should display dashboard after login', async ({ page }) => {
+  17 |     await allure.step('Verify dashboard content', async () => {
+  18 |       await expect(page.locator('[data-testid="dashboard-content"]')).toBeVisible();
+  19 |       await expect(page.locator('[data-testid="navigation-menu"]')).toBeVisible();
+  20 |       
+  21 |       // Take screenshot of dashboard
+  22 |       const screenshot = await page.screenshot();
+  23 |       await allure.attachment('Dashboard Screenshot', screenshot, 'image/png');
+  24 |     });
+  25 |   });
+  26 |
+  27 |   test('should navigate to cost calculator', async ({ page }) => {
+  28 |     await allure.step('Navigate to cost calculator', async () => {
+  29 |       await page.click('[data-testid="cost-calculator-link"]');
+  30 |       await page.waitForURL(/.*cost-calculator/);
+  31 |     });
+  32 |     
+  33 |     await allure.step('Verify cost calculator page', async () => {
+  34 |       await expect(page.locator('[data-testid="calculator-title"]')).toContainText('Cost Calculator');
+  35 |       await expect(page.locator('[data-testid="calculator-form"]')).toBeVisible();
+  36 |     });
+  37 |   });
+  38 |
+  39 |   test('should navigate to patient list', async ({ page }) => {
+  40 |     await allure.step('Navigate to patient list', async () => {
+  41 |       await page.click('[data-testid="patients-link"]');
+  42 |       await page.waitForURL(/.*patients/);
+  43 |     });
+  44 |     
+  45 |     await allure.step('Verify patient list page', async () => {
+  46 |       await expect(page.locator('[data-testid="patients-title"]')).toContainText('Patients');
+  47 |       await expect(page.locator('[data-testid="patient-list"]')).toBeVisible();
+  48 |     });
+  49 |   });
+  50 |
+  51 |   test('should display test requests', async ({ page }) => {
+  52 |     await allure.step('Check test requests section', async () => {
+  53 |       await expect(page.locator('[data-testid="test-requests"]')).toBeVisible();
+  54 |       const requestCount = await page.locator('[data-testid="test-request-item"]').count();
+  55 |       await allure.attachment('Test Request Count', `${requestCount}`, 'text/plain');
+  56 |     });
+  57 |   });
+  58 |
+  59 |   test('should update test request status', async ({ page }) => {
+  60 |     await allure.step('Find pending test request', async () => {
+  61 |       await page.locator('[data-testid="test-request-item"]:not([data-status="completed"])').first().waitFor();
+  62 |     });
+  63 |
+  64 |     await allure.step('Update request status', async () => {
+  65 |       await page.click('[data-testid="update-status-button"]');
+  66 |       await page.selectOption('[data-testid="status-select"]', 'completed');
+  67 |       await page.click('[data-testid="save-status-button"]');
+  68 |     });
+  69 |
+  70 |     await allure.step('Verify status update', async () => {
+  71 |       await expect(page.locator('[data-testid="request-status"]')).toContainText('Completed');
+  72 |     });
+  73 |   });
+  74 | }); 
+```

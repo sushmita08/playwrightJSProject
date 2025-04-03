@@ -1,0 +1,79 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Login Functionality >> should login successfully with valid credentials
+- Location: /Users/zineone/Assesment/tests/login.spec.js:5:3
+
+# Error details
+
+```
+Error: page.waitForURL: Test ended.
+=========================== logs ===========================
+waiting for navigation to "**/dashboard" until "load"
+============================================================
+    at /Users/zineone/Assesment/tests/login.spec.js:23:18
+    at /Users/zineone/Assesment/tests/login.spec.js:21:10
+```
+
+# Test source
+
+```ts
+   1 | const { test } = require('@playwright/test');
+   2 | const { allure } = require('@playwright/test');
+   3 |
+   4 | test.describe('Login Functionality', () => {
+   5 |   test('should login successfully with valid credentials', async ({ page }) => {
+   6 |     test.step('Navigate to login page', async () => {
+   7 |       await page.goto('https://gor-pathology.web.app/');
+   8 |     });
+   9 |
+  10 |     test.step('Fill login credentials', async () => {
+  11 |       // Wait for the login form to be visible
+  12 |       await page.waitForSelector('input[type="email"]', { timeout: 10000 });
+  13 |       await page.fill('input[type="email"]', 'test@kennect.io');
+  14 |       await page.fill('input[type="password"]', 'Qwerty@1234');
+  15 |     });
+  16 |
+  17 |     test.step('Submit login form', async () => {
+  18 |       await page.click('button[type="submit"]');
+  19 |     });
+  20 |
+  21 |     test.step('Verify successful login', async () => {
+  22 |       // Wait for navigation after login
+> 23 |       await page.waitForURL('**/dashboard', { timeout: 10000 });
+     |                  ^ Error: page.waitForURL: Test ended.
+  24 |       // Take a screenshot of the dashboard
+  25 |       await page.screenshot({ path: 'test-results/dashboard.png' });
+  26 |     });
+  27 |   });
+  28 |
+  29 |   test('should show error with invalid credentials', async ({ page }) => {
+  30 |     test.step('Navigate to login page', async () => {
+  31 |       await page.goto('https://gor-pathology.web.app/');
+  32 |     });
+  33 |
+  34 |     test.step('Fill invalid credentials', async () => {
+  35 |       await page.waitForSelector('input[type="email"]', { timeout: 10000 });
+  36 |       await page.fill('input[type="email"]', 'invalid@email.com');
+  37 |       await page.fill('input[type="password"]', 'wrongpassword');
+  38 |     });
+  39 |
+  40 |     test.step('Submit login form', async () => {
+  41 |       await page.click('button[type="submit"]');
+  42 |     });
+  43 |
+  44 |     test.step('Verify error message', async () => {
+  45 |       const errorMessage = await page.waitForSelector('.error-message, .alert-error', {
+  46 |         timeout: 10000,
+  47 |         state: 'visible'
+  48 |       });
+  49 |       await page.screenshot({ path: 'test-results/login-error.png' });
+  50 |     });
+  51 |   });
+  52 | }); 
+```

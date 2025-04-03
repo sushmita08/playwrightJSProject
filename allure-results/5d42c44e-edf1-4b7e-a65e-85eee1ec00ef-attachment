@@ -1,0 +1,149 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Patient Management >> should add new patient
+- Location: /Users/zineone/Assesment/tests/patient-management.spec.js:23:3
+
+# Error details
+
+```
+Error: page.fill: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for locator('input[name="age"]')
+
+    at /Users/zineone/Assesment/tests/patient-management.spec.js:29:16
+```
+
+# Page snapshot
+
+```yaml
+- banner:
+  - button "account of current user": T
+- navigation "mailbox folders":
+  - separator
+  - list:
+    - link "dashboard Dashboard":
+      - button "dashboard Dashboard":
+        - img "dashboard"
+        - text: Dashboard
+    - link "dashboard Tests":
+      - button "dashboard Tests":
+        - img "dashboard"
+        - text: Tests
+    - link "dashboard Inventory":
+      - button "dashboard Inventory":
+        - img "dashboard"
+        - text: Inventory
+    - link "dashboard Patients":
+      - button "dashboard Patients":
+        - img "dashboard"
+        - text: Patients
+    - link "dashboard Labs":
+      - button "dashboard Labs":
+        - img "dashboard"
+        - text: Labs
+    - link "dashboard Doctors":
+      - button "dashboard Doctors":
+        - img "dashboard"
+        - text: Doctors
+    - link "dashboard Accounting":
+      - button "dashboard Accounting":
+        - img "dashboard"
+        - text: Accounting
+- main:
+  - text: Add Patient
+  - navigation "breadcrumb":
+    - list:
+      - listitem:
+        - link "dashboard":
+          - paragraph: dashboard
+      - listitem:
+        - link "patients":
+          - paragraph: patients
+      - listitem:
+        - paragraph: add
+  - heading "Patient Contact Details" [level=2]
+  - text: Name
+  - textbox: John Doe
+  - text: Email
+  - textbox
+  - text: Phone
+  - paragraph: "+91"
+  - spinbutton
+  - text: Patient Contact General Details Add Tests
+  - button "cancel"
+  - button "General Details add":
+    - text: General Details
+    - img "add"
+```
+
+# Test source
+
+```ts
+   1 | const { test, expect } = require('@playwright/test');
+   2 |
+   3 | test.describe('Patient Management', () => {
+   4 |   test.beforeEach(async ({ page }) => {
+   5 |     // Login before each test
+   6 |     await page.goto('https://gor-pathology.web.app/');
+   7 |     await page.fill('input[type="email"]', 'test@kennect.io');
+   8 |     await page.fill('input[type="password"]', 'Qwerty@1234');
+   9 |     await page.click('button[type="submit"]');
+  10 |     
+  11 |     // Navigate to patient management
+  12 |     await page.click('text=Patients');
+  13 |   });
+  14 |
+  15 |   test('should display patient management page', async ({ page }) => {
+  16 |     // Verify page title
+  17 |     await expect(page.locator('h1')).toContainText('Patient Management');
+  18 |     
+  19 |     // Verify add patient button is visible
+  20 |     await expect(page.locator('button:has-text("Add Patient")')).toBeVisible();
+  21 |   });
+  22 |
+  23 |   test('should add new patient', async ({ page }) => {
+  24 |     // Click add patient button
+  25 |     await page.click('button:has-text("Add Patient")');
+  26 |     
+  27 |     // Fill patient details
+  28 |     await page.fill('input[name="name"]', 'John Doe');
+> 29 |     await page.fill('input[name="age"]', '30');
+     |                ^ Error: page.fill: Test timeout of 30000ms exceeded.
+  30 |     await page.fill('input[name="phone"]', '1234567890');
+  31 |     await page.fill('input[name="email"]', 'john.doe@example.com');
+  32 |     
+  33 |     // Submit form
+  34 |     await page.click('button:has-text("Save")');
+  35 |     
+  36 |     // Verify patient is added
+  37 |     await expect(page.locator('.patient-list')).toContainText('John Doe');
+  38 |   });
+  39 |
+  40 |   test('should create test request', async ({ page }) => {
+  41 |     // Click create test button
+  42 |     await page.click('button:has-text("Create Test")');
+  43 |     
+  44 |     // Select patient
+  45 |     await page.selectOption('select[name="patient"]', 'John Doe');
+  46 |     
+  47 |     // Select test
+  48 |     await page.selectOption('select[name="test"]', 'CBC');
+  49 |     
+  50 |     // Add notes
+  51 |     await page.fill('textarea[name="notes"]', 'Routine checkup');
+  52 |     
+  53 |     // Submit form
+  54 |     await page.click('button:has-text("Create")');
+  55 |     
+  56 |     // Verify test request is created
+  57 |     await expect(page.locator('.test-requests')).toContainText('John Doe');
+  58 |     await expect(page.locator('.test-requests')).toContainText('CBC');
+  59 |   });
+  60 | }); 
+```

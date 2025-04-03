@@ -1,0 +1,132 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Login Functionality >> should show error with invalid credentials
+- Location: /Users/zineone/Assesment/tests/login.spec.js:52:3
+
+# Error details
+
+```
+Error: Timed out 10000ms waiting for expect(locator).toBeVisible()
+
+Locator: locator('.error-message, .alert-error').first()
+Expected: visible
+Received: <element(s) not found>
+Call log:
+  - expect.toBeVisible with timeout 10000ms
+  - waiting for locator('.error-message, .alert-error').first()
+
+    at /Users/zineone/Assesment/tests/login.spec.js:75:36
+```
+
+# Page snapshot
+
+```yaml
+- text: GOR Pathology & Diagnostic Email
+- textbox: invalid@example.com
+- text: Password
+- textbox: wrongpassword
+- button "Login"
+- button "Recover or set password"
+- text: OR
+- button "gooogle Login in with Google":
+  - img "gooogle"
+  - text: Login in with Google
+- alert:
+  - text: There is no user record corresponding to this identifier. The user may have been deleted.
+  - button "close"
+```
+
+# Test source
+
+```ts
+   1 | const { test, expect } = require('@playwright/test');
+   2 | const { allure } = require('@playwright/test');
+   3 |
+   4 | test.describe('Login Functionality', () => {
+   5 |   test.beforeEach(async ({ page }) => {
+   6 |     await test.step('Navigate to login page', async () => {
+   7 |       try {
+   8 |         await page.goto('/');
+   9 |         await expect(page.locator('input[type="email"]')).toBeVisible({ timeout: 15000 });
+  10 |       } catch (error) {
+  11 |         console.error('Failed to load login page:', error);
+  12 |         throw error;
+  13 |       }
+  14 |     });
+  15 |   });
+  16 |
+  17 |   test('should login successfully with valid credentials', async ({ page }) => {
+  18 |     await test.step('Fill login credentials', async () => {
+  19 |       try {
+  20 |         await page.fill('input[type="email"]', 'test@kennect.io');
+  21 |         await page.fill('input[type="password"]', 'Qwerty@1234');
+  22 |       } catch (error) {
+  23 |         console.error('Failed to fill login credentials:', error);
+  24 |         throw error;
+  25 |       }
+  26 |     });
+  27 |
+  28 |     await test.step('Submit login form', async () => {
+  29 |       try {
+  30 |         await Promise.all([
+  31 |           page.waitForNavigation({ waitUntil: 'networkidle' }),
+  32 |           page.click('button[type="submit"], .login-button')
+  33 |         ]);
+  34 |       } catch (error) {
+  35 |         console.error('Failed to submit login form:', error);
+  36 |         throw error;
+  37 |       }
+  38 |     });
+  39 |
+  40 |     await test.step('Verify successful login', async () => {
+  41 |       try {
+  42 |         await expect(page).toHaveURL(/.*dashboard/);
+  43 |         await expect(page.locator('.dashboard-content, .main-content')).toBeVisible();
+  44 |         await page.screenshot({ path: 'test-results/dashboard.png' });
+  45 |       } catch (error) {
+  46 |         console.error('Failed to verify successful login:', error);
+  47 |         throw error;
+  48 |       }
+  49 |     });
+  50 |   });
+  51 |
+  52 |   test('should show error with invalid credentials', async ({ page }) => {
+  53 |     await test.step('Fill invalid credentials', async () => {
+  54 |       try {
+  55 |         await page.fill('input[type="email"]', 'invalid@example.com');
+  56 |         await page.fill('input[type="password"]', 'wrongpassword');
+  57 |       } catch (error) {
+  58 |         console.error('Failed to fill invalid credentials:', error);
+  59 |         throw error;
+  60 |       }
+  61 |     });
+  62 |
+  63 |     await test.step('Submit login form', async () => {
+  64 |       try {
+  65 |         await page.click('button[type="submit"], .login-button');
+  66 |       } catch (error) {
+  67 |         console.error('Failed to submit login form:', error);
+  68 |         throw error;
+  69 |       }
+  70 |     });
+  71 |
+  72 |     await test.step('Verify error message', async () => {
+  73 |       try {
+  74 |         const errorMessage = await page.locator('.error-message, .alert-error').first();
+> 75 |         await expect(errorMessage).toBeVisible({ timeout: 10000 });
+     |                                    ^ Error: Timed out 10000ms waiting for expect(locator).toBeVisible()
+  76 |         await page.screenshot({ path: 'test-results/login-error.png' });
+  77 |       } catch (error) {
+  78 |         console.error('Failed to verify error message:', error);
+  79 |         throw error;
+  80 |       }
+  81 |     });
+  82 |   });
+  83 | }); 
+```

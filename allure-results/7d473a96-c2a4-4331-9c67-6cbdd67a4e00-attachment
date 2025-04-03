@@ -1,0 +1,109 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Login Functionality >> should login successfully with valid credentials
+- Location: /Users/zineone/Assesment/tests/login.spec.js:11:3
+
+# Error details
+
+```
+Error: page.fill: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for locator('[data-testid="email-input"]')
+
+    at body (/Users/zineone/Assesment/tests/login.spec.js:13:18)
+    at body (/Users/zineone/Assesment/node_modules/allure-js-commons/src/facade.ts:113:48)
+    at call (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:13:56)
+    at tryCatch (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at Generator._invoke (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at Generator.next (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at asyncGeneratorStep (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at _next (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at /Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1
+    at /Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1
+    at call (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:13:23)
+    at tryCatch (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at Generator._invoke (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at Generator.next (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at asyncGeneratorStep (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at _next (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at /Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1
+    at AllurePlaywrightTestRuntime.apply (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:2:1)
+    at AllurePlaywrightTestRuntime.step (/Users/zineone/Assesment/node_modules/allure-playwright/src/runtime.ts:14:4)
+    at callRuntimeMethod (/Users/zineone/Assesment/node_modules/allure-js-commons/src/facade.ts:21:27)
+    at Object.step (/Users/zineone/Assesment/node_modules/allure-js-commons/src/facade.ts:113:10)
+    at Object.step (/Users/zineone/Assesment/node_modules/allure-playwright/src/legacy.ts:147:48)
+    at /Users/zineone/Assesment/tests/login.spec.js:12:18
+```
+
+# Page snapshot
+
+```yaml
+- text: GOR Pathology & Diagnostic Email
+- textbox
+- text: Password
+- textbox
+- button "Login"
+- button "Recover or set password"
+- text: OR
+- button "gooogle Login in with Google":
+  - img "gooogle"
+  - text: Login in with Google
+```
+
+# Test source
+
+```ts
+   1 | const { test, expect } = require('@playwright/test');
+   2 | const { allure } = require('allure-playwright');
+   3 |
+   4 | test.describe('Login Functionality', () => {
+   5 |   test.beforeEach(async ({ page }) => {
+   6 |     await allure.step('Navigate to login page', async () => {
+   7 |       await page.goto('https://gor-pathology.web.app/');
+   8 |     });
+   9 |   });
+  10 |
+  11 |   test('should login successfully with valid credentials', async ({ page }) => {
+  12 |     await allure.step('Fill login credentials', async () => {
+> 13 |       await page.fill('[data-testid="email-input"]', 'test@kennect.io');
+     |                  ^ Error: page.fill: Test timeout of 30000ms exceeded.
+  14 |       await page.fill('[data-testid="password-input"]', 'Qwerty@1234');
+  15 |     });
+  16 |     
+  17 |     await allure.step('Submit login form', async () => {
+  18 |       await page.click('[data-testid="login-button"]');
+  19 |     });
+  20 |     
+  21 |     await allure.step('Verify successful login', async () => {
+  22 |       // Wait for navigation
+  23 |       await page.waitForURL(/.*dashboard/);
+  24 |       // Wait for dashboard content
+  25 |       await page.waitForSelector('[data-testid="dashboard-content"]', { state: 'visible' });
+  26 |       await expect(page.locator('[data-testid="dashboard-content"]')).toBeVisible();
+  27 |     });
+  28 |   });
+  29 |
+  30 |   test('should show error with invalid credentials', async ({ page }) => {
+  31 |     await allure.step('Fill invalid credentials', async () => {
+  32 |       await page.fill('[data-testid="email-input"]', 'invalid@email.com');
+  33 |       await page.fill('[data-testid="password-input"]', 'wrongpassword');
+  34 |     });
+  35 |     
+  36 |     await allure.step('Submit login form', async () => {
+  37 |       await page.click('[data-testid="login-button"]');
+  38 |     });
+  39 |     
+  40 |     await allure.step('Verify error message', async () => {
+  41 |       await expect(page.locator('[data-testid="error-message"]')).toBeVisible();
+  42 |       const errorText = await page.locator('[data-testid="error-message"]').textContent();
+  43 |       await allure.attachment('Error Message', errorText, 'text/plain');
+  44 |     });
+  45 |   });
+  46 | }); 
+```

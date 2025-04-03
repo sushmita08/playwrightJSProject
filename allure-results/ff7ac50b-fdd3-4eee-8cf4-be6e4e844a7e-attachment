@@ -1,0 +1,112 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Patient Management >> should create test request
+- Location: /Users/zineone/Assesment/tests/patient-management.spec.js:56:3
+
+# Error details
+
+```
+Error: page.click: Test ended.
+Call log:
+  - waiting for locator('select.patient-select, .patient-dropdown')
+
+    at /Users/zineone/Assesment/tests/patient-management.spec.js:64:18
+    at /Users/zineone/Assesment/tests/patient-management.spec.js:62:10
+```
+
+# Test source
+
+```ts
+   1 | const { test } = require('@playwright/test');
+   2 | const { allure } = require('@playwright/test');
+   3 |
+   4 | test.describe('Patient Management', () => {
+   5 |   test.beforeEach(async ({ page }) => {
+   6 |     test.step('Login to application', async () => {
+   7 |       await page.goto('https://gor-pathology.web.app/');
+   8 |       await page.waitForSelector('input[type="email"]', { timeout: 10000 });
+   9 |       await page.fill('input[type="email"]', 'test@kennect.io');
+  10 |       await page.fill('input[type="password"]', 'Qwerty@1234');
+  11 |       await page.click('button[type="submit"]');
+  12 |     });
+  13 |
+  14 |     test.step('Navigate to patient management', async () => {
+  15 |       await page.click('text=Patients, a[href*="patients"]');
+  16 |       await page.waitForURL('**/patients', { timeout: 10000 });
+  17 |     });
+  18 |   });
+  19 |
+  20 |   test('should display patient list', async ({ page }) => {
+  21 |     test.step('Verify patient list elements', async () => {
+  22 |       // Wait for patient list elements
+  23 |       await page.waitForSelector('table, .patient-list', { timeout: 10000 });
+  24 |       await page.waitForSelector('button:has-text("Add Patient"), .add-patient-btn', { timeout: 10000 });
+  25 |       
+  26 |       // Get patient count
+  27 |       const patients = await page.$$('tr.patient-row, .patient-item');
+  28 |       await page.screenshot({ path: 'test-results/patient-list.png' });
+  29 |     });
+  30 |   });
+  31 |
+  32 |   test('should add new patient', async ({ page }) => {
+  33 |     test.step('Open add patient form', async () => {
+  34 |       await page.click('button:has-text("Add Patient"), .add-patient-btn');
+  35 |       await page.waitForSelector('form, .patient-form', { timeout: 10000 });
+  36 |     });
+  37 |
+  38 |     test.step('Fill patient details', async () => {
+  39 |       await page.fill('input[name="name"], input[placeholder*="name"]', 'John Doe');
+  40 |       await page.fill('input[name="age"], input[type="number"]', '30');
+  41 |       await page.fill('input[name="phone"], input[type="tel"]', '1234567890');
+  42 |       await page.fill('input[name="email"], input[type="email"]', 'john@example.com');
+  43 |     });
+  44 |
+  45 |     test.step('Submit patient form', async () => {
+  46 |       await page.click('button:has-text("Save"), button[type="submit"]');
+  47 |       // Wait for success message or new patient in list
+  48 |       await page.waitForSelector('.success-message, .patient-added', {
+  49 |         timeout: 10000,
+  50 |         state: 'visible'
+  51 |       });
+  52 |       await page.screenshot({ path: 'test-results/new-patient-added.png' });
+  53 |     });
+  54 |   });
+  55 |
+  56 |   test('should create test request', async ({ page }) => {
+  57 |     test.step('Open create test form', async () => {
+  58 |       await page.click('button:has-text("Create Test"), .create-test-btn');
+  59 |       await page.waitForSelector('form, .test-request-form', { timeout: 10000 });
+  60 |     });
+  61 |
+  62 |     test.step('Fill test request details', async () => {
+  63 |       // Select patient
+> 64 |       await page.click('select.patient-select, .patient-dropdown');
+     |                  ^ Error: page.click: Test ended.
+  65 |       await page.click('text="John Doe"');
+  66 |
+  67 |       // Select test
+  68 |       await page.click('select.test-select, .test-dropdown');
+  69 |       await page.click('text="Complete Blood Count"');
+  70 |
+  71 |       // Add notes
+  72 |       await page.fill('textarea, .test-notes', 'Routine checkup');
+  73 |     });
+  74 |
+  75 |     test.step('Submit test request', async () => {
+  76 |       await page.click('button:has-text("Submit"), button[type="submit"]');
+  77 |       // Wait for success message
+  78 |       await page.waitForSelector('.success-message, .request-created', {
+  79 |         timeout: 10000,
+  80 |         state: 'visible'
+  81 |       });
+  82 |       await page.screenshot({ path: 'test-results/test-request-created.png' });
+  83 |     });
+  84 |   });
+  85 | }); 
+```

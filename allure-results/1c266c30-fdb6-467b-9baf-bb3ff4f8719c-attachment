@@ -1,0 +1,118 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Cost Calculator >> should display cost calculator form
+- Location: /Users/zineone/Assesment/tests/cost-calculator.spec.js:19:3
+
+# Error details
+
+```
+Error: page.fill: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for locator('[data-testid="email-input"]')
+
+    at /Users/zineone/Assesment/tests/cost-calculator.spec.js:8:18
+```
+
+# Page snapshot
+
+```yaml
+- text: GOR Pathology & Diagnostic Email
+- textbox
+- text: Password
+- textbox
+- button "Login"
+- button "Recover or set password"
+- text: OR
+- button "gooogle Login in with Google":
+  - img "gooogle"
+  - text: Login in with Google
+```
+
+# Test source
+
+```ts
+   1 | const { test, expect } = require('@playwright/test');
+   2 | const { allure } = require('allure-playwright');
+   3 |
+   4 | test.describe('Cost Calculator', () => {
+   5 |   test.beforeEach(async ({ page }) => {
+   6 |     await allure.step('Login to application', async () => {
+   7 |       await page.goto('https://gor-pathology.web.app/');
+>  8 |       await page.fill('[data-testid="email-input"]', 'test@kennect.io');
+     |                  ^ Error: page.fill: Test timeout of 30000ms exceeded.
+   9 |       await page.fill('[data-testid="password-input"]', 'Qwerty@1234');
+  10 |       await page.click('[data-testid="login-button"]');
+  11 |     });
+  12 |
+  13 |     await allure.step('Navigate to cost calculator', async () => {
+  14 |       await page.click('[data-testid="cost-calculator-link"]');
+  15 |       await page.waitForURL(/.*cost-calculator/);
+  16 |     });
+  17 |   });
+  18 |
+  19 |   test('should display cost calculator form', async ({ page }) => {
+  20 |     await allure.step('Verify calculator form elements', async () => {
+  21 |       await expect(page.locator('[data-testid="calculator-title"]')).toContainText('Cost Calculator');
+  22 |       await expect(page.locator('[data-testid="test-select"]')).toBeVisible();
+  23 |       await expect(page.locator('[data-testid="discount-input"]')).toBeVisible();
+  24 |       
+  25 |       // Take screenshot of calculator form
+  26 |       const screenshot = await page.screenshot();
+  27 |       await allure.attachment('Calculator Form', screenshot, 'image/png');
+  28 |     });
+  29 |   });
+  30 |
+  31 |   test('should calculate test costs', async ({ page }) => {
+  32 |     await allure.step('Select test and verify cost', async () => {
+  33 |       await page.selectOption('[data-testid="test-select"]', { label: 'Complete Blood Count (CBC)' });
+  34 |       
+  35 |       // Get and verify test cost
+  36 |       const testCost = await page.locator('[data-testid="test-cost"]').textContent();
+  37 |       await allure.attachment('Test Cost', testCost, 'text/plain');
+  38 |       
+  39 |       await expect(page.locator('[data-testid="total-cost"]')).toBeVisible();
+  40 |     });
+  41 |   });
+  42 |
+  43 |   test('should apply discount', async ({ page }) => {
+  44 |     await allure.step('Select test', async () => {
+  45 |       await page.selectOption('[data-testid="test-select"]', { label: 'Complete Blood Count (CBC)' });
+  46 |       const originalCost = await page.locator('[data-testid="total-cost"]').textContent();
+  47 |       await allure.attachment('Original Cost', originalCost, 'text/plain');
+  48 |     });
+  49 |
+  50 |     await allure.step('Apply discount', async () => {
+  51 |       await page.fill('[data-testid="discount-input"]', '10');
+  52 |       await page.click('[data-testid="apply-discount-button"]');
+  53 |     });
+  54 |
+  55 |     await allure.step('Verify discounted amount', async () => {
+  56 |       await expect(page.locator('[data-testid="discounted-total"]')).toBeVisible();
+  57 |       const discountedCost = await page.locator('[data-testid="discounted-total"]').textContent();
+  58 |       await allure.attachment('Discounted Cost', discountedCost, 'text/plain');
+  59 |     });
+  60 |   });
+  61 |
+  62 |   test('should add multiple tests', async ({ page }) => {
+  63 |     await allure.step('Add multiple tests', async () => {
+  64 |       await page.click('[data-testid="add-test-button"]');
+  65 |       await page.selectOption('[data-testid="test-select"]', { label: 'Complete Blood Count (CBC)' });
+  66 |       await page.click('[data-testid="add-test-button"]');
+  67 |       await page.selectOption('[data-testid="test-select-1"]', { label: 'Lipid Profile' });
+  68 |     });
+  69 |
+  70 |     await allure.step('Verify total cost', async () => {
+  71 |       const totalCost = await page.locator('[data-testid="total-cost"]').textContent();
+  72 |       await allure.attachment('Total Cost for Multiple Tests', totalCost, 'text/plain');
+  73 |       await expect(page.locator('[data-testid="test-items"]')).toContainText('CBC');
+  74 |       await expect(page.locator('[data-testid="test-items"]')).toContainText('Lipid Profile');
+  75 |     });
+  76 |   });
+  77 | }); 
+```

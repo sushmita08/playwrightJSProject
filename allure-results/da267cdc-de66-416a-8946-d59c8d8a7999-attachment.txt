@@ -1,0 +1,46 @@
+Failed to login: page.waitForNavigation: Timeout 15000ms exceeded.
+=========================== logs ===========================
+waiting for navigation until "networkidle"
+  navigated to "https://gor-pathology.web.app/dashboard"
+============================================================
+    at /Users/zineone/Assesment/tests/cost-calculator.spec.js:13:16
+    at /Users/zineone/Assesment/tests/cost-calculator.spec.js:6:5 {
+  name: 'TimeoutError',
+  [Symbol(step)]: {
+    stepId: 'pw:api@14',
+    location: {
+      file: '/Users/zineone/Assesment/tests/cost-calculator.spec.js',
+      line: 13,
+      column: 16
+    },
+    category: 'pw:api',
+    title: 'page.waitForNavigation',
+    apiName: 'page.waitForNavigation',
+    params: { info: [Object] },
+    boxedStack: undefined,
+    steps: [],
+    attachmentIndices: [],
+    info: TestStepInfoImpl {
+      annotations: [],
+      _testInfo: [TestInfoImpl],
+      _stepId: 'pw:api@14'
+    },
+    complete: [Function: complete],
+    endWallTime: 1743661370547,
+    error: {
+      message: 'TimeoutError: page.waitForNavigation: Timeout 15000ms exceeded.\n' +
+        '=========================== logs ===========================\n' +
+        'waiting for navigation until "networkidle"\n' +
+        '  navigated to "https://gor-pathology.web.app/dashboard"\n' +
+        '============================================================',
+      stack: 'TimeoutError: page.waitForNavigation: Timeout 15000ms exceeded.\n' +
+        '=========================== logs ===========================\n' +
+        'waiting for navigation until "networkidle"\n' +
+        '  navigated to "https://gor-pathology.web.app/dashboard"\n' +
+        '============================================================\n' +
+        '    at /Users/zineone/Assesment/tests/cost-calculator.spec.js:13:16\n' +
+        '    at /Users/zineone/Assesment/tests/cost-calculator.spec.js:6:5',
+      cause: undefined
+    }
+  }
+}

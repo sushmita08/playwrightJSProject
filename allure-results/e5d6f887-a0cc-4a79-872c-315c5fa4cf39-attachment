@@ -1,0 +1,997 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: Patient Management >> should display patient list
+- Location: /Users/zineone/Assesment/tests/patient-management.spec.js:36:3
+
+# Error details
+
+```
+TimeoutError: page.waitForNavigation: Timeout 15000ms exceeded.
+=========================== logs ===========================
+waiting for navigation until "networkidle"
+  navigated to "https://gor-pathology.web.app/dashboard"
+============================================================
+    at /Users/zineone/Assesment/tests/patient-management.spec.js:13:16
+    at /Users/zineone/Assesment/tests/patient-management.spec.js:6:5
+```
+
+# Page snapshot
+
+```yaml
+- banner:
+  - button "account of current user": T
+- navigation "mailbox folders":
+  - separator
+  - list:
+    - link "dashboard Dashboard":
+      - button "dashboard Dashboard":
+        - img "dashboard"
+        - text: Dashboard
+    - link "dashboard Tests":
+      - button "dashboard Tests":
+        - img "dashboard"
+        - text: Tests
+    - link "dashboard Inventory":
+      - button "dashboard Inventory":
+        - img "dashboard"
+        - text: Inventory
+    - link "dashboard Patients":
+      - button "dashboard Patients":
+        - img "dashboard"
+        - text: Patients
+    - link "dashboard Labs":
+      - button "dashboard Labs":
+        - img "dashboard"
+        - text: Labs
+    - link "dashboard Doctors":
+      - button "dashboard Doctors":
+        - img "dashboard"
+        - text: Doctors
+    - link "dashboard Accounting":
+      - button "dashboard Accounting":
+        - img "dashboard"
+        - text: Accounting
+- main:
+  - text: Dashboard
+  - navigation "breadcrumb":
+    - list:
+      - listitem:
+        - paragraph: dashboard
+  - text: Remaining work mark as done
+  - list "completed todo":
+    - listitem:
+      - 'button "Active test: 477 - tony carelon"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 457 - Name"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "why this kolavari"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 146 - johan"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 189 - iuytrdf"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 448 - testingnew patient"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 204 - pankaj jha"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 471 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 132 - Test1"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 155 - Automated User One"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 131 - Test"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 320 - Josh Patient"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 139 - 123"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 192 - Test"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 311 - Mrs. Jordon Paucek"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 453 - Kolimi Mahaboob Bhasha"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 447 - testingnew patient"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 264 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 355 - demo"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 409 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "qwe dfghj dfghj lll"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 211 - Test1Lijo"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 259 - P"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "hjk"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 482 - Amit Majumder"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "lolol"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 188 - Abhijeet Bhalerao"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 474 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 254 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "lolol"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 417 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "lol"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 403 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 450 - jon"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 425 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 411 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 427 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 255 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 148 - gdrgdr"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 479 - Harikrishnan s"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 429 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 444 - testingnew patient"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 464 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "saurabh automation"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 435 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 460 - KVsiva"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 463 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 173 - sorna"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 401 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 203 - pankaj"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 313 - Test Name"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Follow up with Patient X"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 449 - jon"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 140 - demo name"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 481 - soma"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 423 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 467 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 268 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 476 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
+      - checkbox "primary checkbox"
+    - listitem:
+      - button "Sagar"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 220 - TesterLijo"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 186 - Name"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 419 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 212 - Test1Lijo"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Follow up with Patient X"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 466 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 412 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "why this kolavari"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 239 - Shadab Khaa"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 475 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Follow up with Patient X"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 483 - joe"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 422 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 137 - chetan Patil"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 218 - TesterLijo"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 266 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 454 - lucy"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 136 - Test"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 251 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 473 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "gguh"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 217 - TesterLijo"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 326 - TestPrasad145"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "why"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 198 - Test100"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 407 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 157 - Automated User One"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 400 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 458 - Name"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 210 - Test1Lijo"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "anson"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 434 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 267 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 304 - Rupali"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 133 - Test"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "hello"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 261 - ds"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "New Todo Added"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 452 - jop"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 147 - fdghgfhfdgh"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 237 - Shadab Shaikh"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 441 - testingnew patient"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 461 - Name"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 472 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 413 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 216 - TesterLijo"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 397 - ssad"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 262 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "To-do 1"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 436 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 199 - abcd"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 327 - Name"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Saurabh Automation"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 402 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Follow up with Patient X"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 205 - Ms. Allyson Farrell"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 430 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 269 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 408 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Bean"
+      - checkbox "primary checkbox"
+    - listitem:
+      - button "Follow up with Patient X"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 214 - Test1Lijo"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 414 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 156 - Automated User One"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 442 - nikita rai"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 433 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Saurabh Automation"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 238 - Shadab Shaikh"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 421 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 187 - ronhy"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 443 - testingnew patient"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 465 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Saurabh Automation"
+      - checkbox "primary checkbox"
+    - listitem:
+      - button "New Todo Added"
+      - checkbox "primary checkbox"
+    - listitem:
+      - button "Saurabh Automation"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 420 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 446 - testingnew patient"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 141 - ruchita"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 314 - Mr. Indra Singh"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 398 - kumar prasad"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 134 - Test"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 396 - Joan K"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Aman Yadav"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 440 - jon"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 196 - xyc"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 150 - dbfdfb"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 250 - fvn"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "aaqwertyu"
+      - checkbox "primary checkbox"
+    - listitem:
+      - button "Prerana Lad"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 462 - Name"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "test"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 200 - ruchita"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 149 - dbfdfb"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 160 - Test"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "New Todo Added"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 308 - Suarabh Sharma"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 405 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 167 - kk"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 215 - sdad"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "A"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 256 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 202 - Xiomara Reichel"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 253 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "vardha- test 120"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 161 - mike"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 265 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "qwe dfghj dfghj lll"
+      - checkbox "primary checkbox"
+    - listitem:
+      - button "lll"
+      - checkbox "primary checkbox"
+    - listitem:
+      - button "New Todo Added"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 270 - dinesh"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Follow up with Patient X"
+      - checkbox "primary checkbox"
+    - listitem:
+      - button "hello"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 424 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 260 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "collect q's blood"
+      - checkbox "primary checkbox"
+    - listitem:
+      - button "hello"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 410 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 219 - TesterLijo"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 263 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 252 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 469 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 456 - Name"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 213 - Test1Lijo"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 312 - Hai Lockman"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 468 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 135 - Test"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 153 - Automated User One"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 455 - ss"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 152 - Automated User One"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 470 - Narul"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "aa"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 404 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 416 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 428 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 438 - jon"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 486 - aditya"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Follow up with Patient X"
+      - checkbox "primary checkbox"
+    - listitem:
+      - 'button "Active test: 319 - abc"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 361 - Prerana Lad"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 437 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 257 - sakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 459 - Name"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 480 - pr"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 337 - Shakshi"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 305 - Suarabh Sharma"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 439 - jon"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - 'button "Active test: 406 - ureanikitatest"'
+      - link "view":
+        - button "view"
+    - listitem:
+      - button "Follow up with Patient X"
+      - checkbox "primary checkbox"
+    - listitem:
+      - button "Follow up with Patient X"
+      - checkbox "primary checkbox"
+  - text: TODO
+  - link "Add add":
+    - button "Add add":
+      - text: Add
+      - img "add"
+  - text: Test Cost Calculator
+  - combobox:
+    - text: Add tests for patient
+    - textbox "Add tests for patient"
+    - button "Open"
+  - text: Discount
+  - button "None":
+    - emphasis: None
+  - paragraph: Discount for customer
+  - text: Subtotal 0 ₹ Total 0 ₹
+```
+
+# Test source
+
+```ts
+   1 | const { test, expect } = require('@playwright/test');
+   2 | const { allure } = require('@playwright/test');
+   3 |
+   4 | test.describe('Patient Management', () => {
+   5 |   test.beforeEach(async ({ page }) => {
+   6 |     await test.step('Login to application', async () => {
+   7 |       try {
+   8 |         await page.goto('/');
+   9 |         await expect(page.locator('input[type="email"]')).toBeVisible();
+   10 |         await page.fill('input[type="email"]', 'test@kennect.io');
+   11 |         await page.fill('input[type="password"]', 'Qwerty@1234');
+   12 |         await Promise.all([
+>  13 |           page.waitForNavigation({ waitUntil: 'networkidle' }),
+      |                ^ TimeoutError: page.waitForNavigation: Timeout 15000ms exceeded.
+   14 |           page.click('button[type="submit"], .login-button')
+   15 |         ]);
+   16 |       } catch (error) {
+   17 |         console.error('Failed to login:', error);
+   18 |         throw error;
+   19 |       }
+   20 |     });
+   21 |
+   22 |     await test.step('Navigate to patient management', async () => {
+   23 |       try {
+   24 |         await Promise.all([
+   25 |           page.waitForNavigation({ waitUntil: 'networkidle' }),
+   26 |           page.click('text=Patients, a[href*="patients"]')
+   27 |         ]);
+   28 |         await expect(page).toHaveURL(/.*patients/);
+   29 |       } catch (error) {
+   30 |         console.error('Failed to navigate to patient management:', error);
+   31 |         throw error;
+   32 |       }
+   33 |     });
+   34 |   });
+   35 |
+   36 |   test('should display patient list', async ({ page }) => {
+   37 |     await test.step('Verify patient list elements', async () => {
+   38 |       try {
+   39 |         await expect(page.locator('table, .patient-list')).toBeVisible();
+   40 |         await expect(page.locator('button:has-text("Add Patient"), .add-patient-btn')).toBeVisible();
+   41 |         
+   42 |         const patientCount = await page.$$eval('tr, .patient-item', items => items.length);
+   43 |         console.log(`Found ${patientCount} patients`);
+   44 |         
+   45 |         await page.screenshot({ path: 'test-results/patient-list.png' });
+   46 |       } catch (error) {
+   47 |         console.error('Failed to verify patient list:', error);
+   48 |         throw error;
+   49 |       }
+   50 |     });
+   51 |   });
+   52 |
+   53 |   test('should add new patient', async ({ page }) => {
+   54 |     await test.step('Open add patient form', async () => {
+   55 |       try {
+   56 |         await page.click('button:has-text("Add Patient"), .add-patient-btn');
+   57 |         await expect(page.locator('form, .patient-form')).toBeVisible();
+   58 |       } catch (error) {
+   59 |         console.error('Failed to open add patient form:', error);
+   60 |         throw error;
+   61 |       }
+   62 |     });
+   63 |
+   64 |     await test.step('Fill patient details', async () => {
+   65 |       try {
+   66 |         await page.fill('input[name="name"], .patient-name', 'John Doe');
+   67 |         await page.fill('input[name="age"], .patient-age', '30');
+   68 |         await page.fill('input[name="phone"], .patient-phone', '1234567890');
+   69 |         await page.fill('input[name="email"], .patient-email', 'john@example.com');
+   70 |       } catch (error) {
+   71 |         console.error('Failed to fill patient details:', error);
+   72 |         throw error;
+   73 |       }
+   74 |     });
+   75 |
+   76 |     await test.step('Submit patient form', async () => {
+   77 |       try {
+   78 |         await Promise.all([
+   79 |           page.waitForResponse(response => response.url().includes('/patients') && response.status() === 200),
+   80 |           page.click('button[type="submit"], .submit-patient')
+   81 |         ]);
+   82 |         
+   83 |         await expect(page.locator('text=Patient added successfully, .success-message')).toBeVisible();
+   84 |         await page.screenshot({ path: 'test-results/new-patient-added.png' });
+   85 |       } catch (error) {
+   86 |         console.error('Failed to submit patient form:', error);
+   87 |         throw error;
+   88 |       }
+   89 |     });
+   90 |   });
+   91 |
+   92 |   test('should create test request', async ({ page }) => {
+   93 |     await test.step('Open create test form', async () => {
+   94 |       try {
+   95 |         await page.click('button:has-text("Create Test"), .create-test-btn');
+   96 |         await expect(page.locator('form, .test-form')).toBeVisible();
+   97 |       } catch (error) {
+   98 |         console.error('Failed to open test form:', error);
+   99 |         throw error;
+  100 |       }
+  101 |     });
+  102 |
+  103 |     await test.step('Fill test request details', async () => {
+  104 |       try {
+  105 |         await page.selectOption('select.patient-select, .patient-dropdown', { label: 'John Doe' });
+  106 |         await page.selectOption('select.test-select, .test-dropdown', { label: 'Complete Blood Count' });
+  107 |         await page.fill('textarea[name="notes"], .test-notes', 'Routine checkup');
+  108 |       } catch (error) {
+  109 |         console.error('Failed to fill test request details:', error);
+  110 |         throw error;
+  111 |       }
+  112 |     });
+  113 |
+```
